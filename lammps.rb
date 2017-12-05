@@ -129,8 +129,8 @@ class Lammps < Formula
     build_lib "FC",    "reax"
     build_lib "FC",    "meam"
     build_lib "CXX",   "poems"
-    build_lib "CXX",   "colvars", :change_compiler_var => "CXX" if build.include? "enable-user-colvars"
-    if build.include? "enable-user-awpmd"
+    build_lib "CXX",   "colvars", :change_compiler_var => "CXX" if build.include? "with-user-colvars"
+    if build.include? "with-user-awpmd"
       build_lib "MPICXX", "awpmd", :prefix_make_var => "user-"
       ENV.append "LDFLAGS", "-lblas -llapack"
     end
@@ -189,7 +189,7 @@ class Lammps < Formula
 
       # setup optional packages
       USER_PACKAGES.each do |pkg|
-        system "make", "yes-" + pkg if build.include? "enable-" + pkg
+        system "make", "yes-" + pkg if build.include? "with-" + pkg
       end
 
       if build.without? :mpi
